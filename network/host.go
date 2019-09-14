@@ -17,11 +17,23 @@ func WifiDevices() ([]WifiDevice, error) {
 
 	for _, dev := range devices {
 		if dev.GetDeviceType() == gonm.NmDeviceTypeWifi {
+			rips := dev.GetIP4Config().GetAddresses()
+			ips := make([]net.IP, len(rips))
+
+			for _, rip := range rips {
+				ip := net.ParseIP(rip.Address)
+				if ip.String() != "" {
+					ips = append(ips, ip)
+				}
+			}
+
 			devs = append(devs, WifiDevice{
 				Device{
-					Name:        dev.GetInterface(),
-					Type:        Wifi,
-					rawDBusPath: string(dev.GetPath()),
+					Name: dev.GetInterface(),
+					Type: Wifi,
+					// Status: ,
+					IPv4Addresses: ips,
+					rawDBusPath:   string(dev.GetPath()),
 				},
 			})
 		}
@@ -45,7 +57,10 @@ func EthernetDevices() ([]EthernetDevice, error) {
 			ips := make([]net.IP, len(rips))
 
 			for _, rip := range rips {
-				ips = append(ips, net.ParseIP(rip.Address))
+				ip := net.ParseIP(rip.Address)
+				if ip.String() != "" {
+					ips = append(ips, ip)
+				}
 			}
 
 			devs = append(devs, EthernetDevice{
@@ -53,8 +68,8 @@ func EthernetDevices() ([]EthernetDevice, error) {
 					Name: dev.GetInterface(),
 					Type: Wifi,
 					// Status: ,
-					// IPv4Addresses: ,
-					rawDBusPath: string(dev.GetPath()),
+					IPv4Addresses: ips,
+					rawDBusPath:   string(dev.GetPath()),
 				},
 			})
 		}
