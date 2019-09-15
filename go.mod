@@ -5,4 +5,5 @@ go 1.13
 require (
 	github.com/BellerophonMobile/gonetworkmanager v0.1.0
 	github.com/godbus/dbus v4.1.0+incompatible
+	github.com/rs/zerolog v1.15.0
 )

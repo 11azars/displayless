@@ -18,7 +18,7 @@ func WifiDevices() ([]WifiDevice, error) {
 	for _, dev := range devices {
 		if dev.GetDeviceType() == gonm.NmDeviceTypeWifi {
 			rips := dev.GetIP4Config().GetAddresses()
-			ips := make([]net.IP, len(rips))
+			ips := make([]net.IP, 0)
 
 			for _, rip := range rips {
 				ip := net.ParseIP(rip.Address)
@@ -54,7 +54,7 @@ func EthernetDevices() ([]EthernetDevice, error) {
 	for _, dev := range devices {
 		if dev.GetDeviceType() == gonm.NmDeviceTypeEthernet {
 			rips := dev.GetIP4Config().GetAddresses()
-			ips := make([]net.IP, len(rips))
+			ips := make([]net.IP, 0)
 
 			for _, rip := range rips {
 				ip := net.ParseIP(rip.Address)
@@ -76,4 +76,8 @@ func EthernetDevices() ([]EthernetDevice, error) {
 	}
 
 	return devs, nil
+}
+
+func WatchForChanges() (<-chan Event, error) {
+	return nil, nil
 }
