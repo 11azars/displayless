@@ -1,12 +1,10 @@
-import Vue from 'vue';
-import App from './App';
+import App from './App.svelte';
 
-Vue.config.productionTip = false;
-document.title = 'Displayless Login Gateway';
-
-/* eslint-disable no-new */
-/* eslint-disable no-unused-vars */
-new Vue({
-  el: '#app',
-  render: h => <App/>,
+const app = new App({
+	target: document.body,
+	props: {
+		name: 'world'
+	}
 });
+
+export default app;
